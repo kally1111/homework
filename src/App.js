@@ -1,25 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+import { useState} from 'react'
+import App1 from './App1'
+
+
+function App(){
+
+      const [state,setState]=useState({
+        counter:0,
+        isActive:true
+      });
+
+    const increment=()=>{
+      if(state.counter<=9){
+        setState({
+         counter:state.counter+1
+        })
+        document.getElementById("decrement").disabled=false;
+      }
+      else{
+        document.getElementById("increment").disabled=true;
+      }
+    }
+
+    const decrement=()=>{
+      if(state.counter>=1){
+        setState({
+          counter:state.counter-1
+        })
+        document.getElementById("increment").disabled=false;
+      }
+      else{
+        document.getElementById("decrement").disabled=true;
+      }
+    }
+
+      const disableButton=()=>{
+      document.getElementsByClassName("blockElement")[0].disabled = state.isActive;
+      document.getElementsByClassName("blockElement")[1].disabled = state.isActive;
+      if(state.isActive===true){
+      state.isActive=false;
+      }
+      else{
+        state.isActive=true;
+      }
+
+
+      }
+
+
+   
+    return (
+      <div>
+        <button id="decrement" className="blockElement" onClick={decrement} 
+      
+        > - </button>
+        <span>
+          <App1 value={state.counter}/>
+        </span>
+        <button id="increment" className="blockElement" onClick={increment} > + </button>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+          
+           <button onClick={disableButton} >disable</button>  
 
-export default App;
+        </p>
+      </div>
+
+
+    )
+
+  }
+  
+  export default App;
